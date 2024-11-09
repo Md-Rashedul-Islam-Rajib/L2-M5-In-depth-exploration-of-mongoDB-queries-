@@ -71,3 +71,51 @@ the result will be the same with the both ways but `project` command won't work 
 
 
 
+## $eq Operator
+
+eq mean equal here . Sometime we need find a data which equals to a static value. for this we use `$eq` operator
+
+```ps
+db.test.find({age: {$eq : 20}})
+```
+
+## $ne Operator
+
+ne mean not equal here . this operator works exact opposite from `$eq`.return only those data what doesn't match the condition.
+
+```ps
+db.test.find({age: {$ne : 20}})
+```
+
+## $gt Operator
+
+gt mean greater than here . when we need to find a or multiple data which is greater than a static value. for this we use `$gt` operator
+
+```ps
+db.test.find({age: {$gt : 18}})
+```
+
+## $gte Operator
+
+gte mean greater than equal here . it returns all of those data which greater than and greater than equals to a static value.
+
+```ps
+db.test.find({age: {$gte : 18}})
+```
+
+
+## $lt Operator
+
+lt means less than here .its the complete opposite of `$gt` operator. When we need find a or multiple data which less than a static value.
+
+```ps
+db.test.find({age: {$lt : 29}})
+```
+
+## $lte Operator
+
+lte mean less than equal here . it returns all of those data which less than and less than equals to a static value.
+
+```ps
+db.test.find({age: {$lte : 20}})
+```
