@@ -254,4 +254,36 @@ db.test.find({skills : {$type : "array"}})
 db.test.find({skills : {$size : 3}})
 ```
 
+`$size` operator works only against array.
+
+
+## $all Operator
+
+MongoDB works on array data in direct approach. Suppose, you have data structured like this
+
+```ts
+const students = 
+    {
+        name : "Mr x",
+        subjects : ["bangla","english","math"]
+        },{
+        name: "Mr y",
+        subjects: ["english", "math", "biology"]           
+        }
+    
+```
+
+now you want to select the data which has a subject value both "english" & "math". you can write the query for it like this 
+
+```ps
+db.test.find({subjects : ["english","math"]})
+```
+
+but this query won't give you any data because no data hold exactly those and also not maintaining those order in that array. This is where `$all` operator will help you
+
+```ps
+db.test.find({subjects : {$all : ["english","math"]}})
+```
+
+this will return the value what data's subjects field hold those value without looking their order.
 
