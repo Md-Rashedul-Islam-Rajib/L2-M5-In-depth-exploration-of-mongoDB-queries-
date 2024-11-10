@@ -2,12 +2,14 @@
 
 Here we explore some of the queries and learn the use case of them. We use nosql booster command shell for this. stuido 3t, command prompt or mongosh command shell can also be used for it. we use database named `test` here.
 
-## Insert 
+## Insert
+
 we can use `insert` command for inserting data into database collection.
 
 ```ps
 db.test.insert({name: "Mr x"}) //insert command is deprecated now
 ```
+
 `insert` command is deprecated now. So, we have to use `insertOne` & `insertMany` command for adding one & multiple data in the database collection.
 
 ```ps
@@ -18,8 +20,8 @@ db.test.insertMany([
     ]) //adding multiple datas
 
 ```
-If we want to add multiple data, we have send it as array of object. 
 
+If we want to add multiple data, we have send it as array of object.
 
 ## Find
 
@@ -30,15 +32,17 @@ db.test.findOne({gender: "male"})
 ```
 
 If we need to find multiple data, the we can use `find` command
+
 ```ps
 db.test.find({age: 25})
 ```
 
-
 ## Field filtering
+
 sometime we need to search one or multiple data specific propertys or fields. We can use field filtering for this.
 
 suppose we have a lot data like this following structure in the database
+
 ```typescript
 const persons = [
     {
@@ -54,11 +58,13 @@ const persons = [
 
 ]
 ```
+
 we want to find all the data with having `age: 20` but only show the email field. so we have to write the query like this
 
 ```ps
 db.test.find({age: 20}, {email: 1})
 ```
+
 here the first object is the search query and the search object is the field we want to return with each data.
 
 there is another way to apply field filtering method with the `project` command
@@ -68,8 +74,6 @@ db.test.find({age: 20}).project({email:1})
 ```
 
 the result will be the same with the both ways but `project` command won't work with `findOne` command but the other works fine
-
-
 
 ## $eq Operator
 
@@ -103,7 +107,6 @@ gte mean greater than and equal here . it returns all of those data which greate
 db.test.find({age: {$gte : 18}})
 ```
 
-
 ## $lt Operator
 
 lt means less than here .its the complete opposite of `$gt` operator. When we need find a or multiple data which less than a static value.
@@ -128,8 +131,8 @@ db.test.find({age: {$lte : 20}})
 db.test.find({interests : { $in : ["Traveling", "Reading"]}})
 db.test.find({age : { $in : [18,20]}})
 ```
-`$in` operator only accepts array as parameter.
 
+`$in` operator only accepts array as parameter.
 
 ## $nin Operator
 
@@ -158,7 +161,6 @@ db.test.find({age:{$lte: 25, $gte : 18}})
 ## $and Operator (Explicit)
 
 We can also use `$and` operator for connecting multiple conditions for filtering data
-
 
 ```ps
 db.test.find({$and : [
@@ -214,11 +216,9 @@ db.test.find({$or : [
 db.test.find({age : {$not : { $ gt : 25}}})
 ```
 
-
 ## $not Operator
 
 `$nor` Operator select datas when it failed to match with all the queries in the selected array
-
 
 ```ps
 db.test.find({$nor : [
@@ -236,7 +236,6 @@ db.test.find({occupation : {$exists : true}})
 ```
 
 `$exists` operator supports only boolean value.
-
 
 ## $type Operator
 
@@ -256,27 +255,26 @@ db.test.find({skills : {$size : 3}})
 
 `$size` operator works only against array.
 
-
 ## $all Operator
 
 MongoDB works on array data in direct approach. Suppose, you have data structured like this
 
 ```ts
-const students = 
+const students =
     {
         name : "Mr x",
         subjects : ["bangla","english","math"]
         },{
         name: "Mr y",
-        subjects: ["english", "math", "biology"]           
+        subjects: ["english", "math", "biology"]
         }
-    
+
 ```
 
-now you want to select the data which has a subject value both "english" & "math". you can write the query for it like this 
+now you want to select the data which has a subject value both "english" & "math". you can write the query for it like this
 
 ```ps
-db.test.find({subjects : ["english","math"]})
+db.test.find({subjects : ["english","math"]}) //this query won't works
 ```
 
 but this query won't give you any data because no data hold exactly those and also not maintaining those order in that array. This is where `$all` operator will help you
@@ -287,3 +285,48 @@ db.test.find({subjects : {$all : ["english","math"]}})
 
 this will return the value what data's subjects field hold those value without looking their order.
 
+## $elemMatch Operator
+
+MongoDB also works on object in a direct approach like array.If a data have nested object like this
+
+```ts
+persons = {
+    {
+        name: "Mr x",
+        skills: {
+            frontend : "react",
+            backend : "node",
+            database : "mongodb",
+            level : "intermediate"
+        }
+        },
+    {
+        name: "Mr Y",
+        skills: {
+            frontend : "react",
+            backend : "node",
+            database : "postgresql",
+            level: "beginner"
+        }
+        },
+}
+```
+
+now you want to select the data what's skill property hold the `forntend : "react"` & `backend : "node"`. you can write this
+
+```ps
+db.test.find({skills: {
+    frontend : "react",
+    backend : "node"
+}})  //this query won't works
+```
+
+this query won't works because no data hold skills field with only forntend & backend. now we can use `$elemMatch` for solve this problem
+
+```ps
+db.test.find({skills : {$elemMatch : {
+    frontend : "react",
+    backend : "node"
+}}})
+```
+this query select the data what skill section holds those value and ignore the other fields for match
