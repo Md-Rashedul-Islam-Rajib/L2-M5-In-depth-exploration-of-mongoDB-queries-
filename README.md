@@ -97,7 +97,7 @@ db.test.find({age: {$gt : 18}})
 
 ## $gte Operator
 
-gte mean greater than equal here . it returns all of those data which greater than and greater than equals to a static value.
+gte mean greater than and equal here . it returns all of those data which greater than and equals to a static value.
 
 ```ps
 db.test.find({age: {$gte : 18}})
@@ -114,8 +114,38 @@ db.test.find({age: {$lt : 29}})
 
 ## $lte Operator
 
-lte mean less than equal here . it returns all of those data which less than and less than equals to a static value.
+lte mean less than and equal here . it returns all of those data which less than and equals to a static value.
 
 ```ps
 db.test.find({age: {$lte : 20}})
+```
+
+## $in Operator
+
+`$in` operator select the data when a value of a field equals any value of a selected array
+
+```ps
+db.test.find({interests : { $in : ["Traveling", "Reading"]}})
+db.test.find({age : { $in : [18,20]}})
+```
+`$in` operator only accepts array as parameter.
+
+
+## $nin Operator
+
+`$nin` operator is the complete opposite of `$in` operator. It select the data when a value of a field not equals any value of a selected array
+
+```ps
+db.test.find({interests : { $nin : ["Cooking", "Dancing"]}})
+db.test.find({age : { $nin : [25,27]}})
+
+```
+
+## Implicit and `,` operator
+
+Sometime we need to find the data with the conditions from multiple fields or filtering with multiple conditions. That's why we need a operator. Here comes the implicit and `,` operator
+
+```ps
+db.test.find({gender: "Female", age: 25, occupation: "Teacher"})
+db.test.find({gender: "Female", age:{$in:  [25,27]}, occupation: {$eq : "Teacher"}})
 ```
