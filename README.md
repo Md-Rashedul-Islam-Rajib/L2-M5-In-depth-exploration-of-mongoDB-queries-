@@ -6,13 +6,13 @@ Here we explore some of the queries and learn the use case of them. We use nosql
 
 we can use `insert` command for inserting data into database collection.
 
-```ps
+```javascript
 db.test.insert({name: "Mr x"}) //insert command is deprecated now
 ```
 
 `insert` command is deprecated now. So, we have to use `insertOne` & `insertMany` command for adding one & multiple data in the database collection.
 
-```ps
+```javascript
 db.test.insertOne({name:"Mr x"}) //adding one data
 db.test.insertMany([
     {name:"Mr x"},
@@ -27,13 +27,13 @@ If we want to add multiple data, we have send it as array of object.
 
 we can use `findOne` command to find a existing data from database collection
 
-```ps
+```javascript
 db.test.findOne({gender: "male"})
 ```
 
 If we need to find multiple data, the we can use `find` command
 
-```ps
+```javascript
 db.test.find({age: 25})
 ```
 
@@ -61,7 +61,7 @@ const persons = [
 
 we want to find all the data with having `age: 20` but only show the email field. so we have to write the query like this
 
-```ps
+```javascript
 db.test.find({age: 20}, {email: 1})
 ```
 
@@ -69,7 +69,7 @@ here the first object is the search query and the search object is the field we 
 
 there is another way to apply field filtering method with the `project` command
 
-```ps
+```javascript
 db.test.find({age: 20}).project({email:1})
 ```
 
@@ -79,7 +79,7 @@ the result will be the same with the both ways but `project` command won't work 
 
 eq mean equal here . Sometime we need find a data which equals to a static value. for this we use `$eq` operator
 
-```ps
+```javascript
 db.test.find({age: {$eq : 20}})
 ```
 
@@ -87,7 +87,7 @@ db.test.find({age: {$eq : 20}})
 
 ne mean not equal here . this operator works exact opposite from `$eq`.return only those data what doesn't match the condition.
 
-```ps
+```javascript
 db.test.find({age: {$ne : 20}})
 ```
 
@@ -95,7 +95,7 @@ db.test.find({age: {$ne : 20}})
 
 gt mean greater than here . when we need to find a or multiple data which is greater than a static value. for this we use `$gt` operator
 
-```ps
+```javascript
 db.test.find({age: {$gt : 18}})
 ```
 
@@ -103,7 +103,7 @@ db.test.find({age: {$gt : 18}})
 
 gte mean greater than and equal here . it returns all of those data which greater than and equals to a static value.
 
-```ps
+```javascript
 db.test.find({age: {$gte : 18}})
 ```
 
@@ -111,7 +111,7 @@ db.test.find({age: {$gte : 18}})
 
 lt means less than here .its the complete opposite of `$gt` operator. When we need find a or multiple data which less than a static value.
 
-```ps
+```javascript
 db.test.find({age: {$lt : 29}})
 ```
 
@@ -119,7 +119,7 @@ db.test.find({age: {$lt : 29}})
 
 lte mean less than and equal here . it returns all of those data which less than and equals to a static value.
 
-```ps
+```javascript
 db.test.find({age: {$lte : 20}})
 ```
 
@@ -127,7 +127,7 @@ db.test.find({age: {$lte : 20}})
 
 `$in` operator select the data when a value of a field equals any value of a selected array
 
-```ps
+```javascript
 db.test.find({interests : { $in : ["Traveling", "Reading"]}})
 db.test.find({age : { $in : [18,20]}})
 ```
@@ -138,7 +138,7 @@ db.test.find({age : { $in : [18,20]}})
 
 `$nin` operator is the complete opposite of `$in` operator. It select the data when a value of a field not equals any value of a selected array
 
-```ps
+```javascript
 db.test.find({interests : { $nin : ["Cooking", "Dancing"]}})
 db.test.find({age : { $nin : [25,27]}})
 
@@ -148,7 +148,7 @@ db.test.find({age : { $nin : [25,27]}})
 
 Sometime we need to find the data with the conditions from multiple fields or filtering with multiple conditions. That's why we need a operator. Here comes the implicit and `,` operator
 
-```ps
+```javascript
 db.test.find({gender: "Female", age: 25, occupation: "Teacher"})
 
 
@@ -162,7 +162,7 @@ db.test.find({age:{$lte: 25, $gte : 18}})
 
 We can also use `$and` operator for connecting multiple conditions for filtering data
 
-```ps
+```javascript
 db.test.find({$and : [
     {gender : "Female"},
     {age : 25},
@@ -187,7 +187,7 @@ db.test.find({$and : [
 
 If we need to select data for satisfies one condition from multiple conditions then we can use `$or` operator
 
-```ps
+```javascript
 db.test.find({$or : [
     {gender : "Female"},
     {age : 25},
@@ -212,7 +212,7 @@ db.test.find({$or : [
 
 `$not` Operator select the data what doesn't match the condition
 
-```ps
+```javascript
 db.test.find({age : {$not : { $ gt : 25}}})
 ```
 
@@ -220,7 +220,7 @@ db.test.find({age : {$not : { $ gt : 25}}})
 
 `$nor` Operator select datas when it failed to match with all the queries in the selected array
 
-```ps
+```javascript
 db.test.find({$nor : [
 {age: {$gt : 25}},
 {gender : "Male"}
@@ -231,7 +231,7 @@ db.test.find({$nor : [
 
 `$exists` operator match the data based on a selected field contain or not on that document.
 
-```ps
+```javascript
 db.test.find({occupation : {$exists : true}})
 ```
 
@@ -241,7 +241,7 @@ db.test.find({occupation : {$exists : true}})
 
 `$type` operator select data based on selected field's value type
 
-```ps
+```javascript
 db.test.find({skills : {$type : "array"}})
 ```
 
@@ -249,7 +249,7 @@ db.test.find({skills : {$type : "array"}})
 
 `$size` operator select data based on selected field's property size
 
-```ps
+```javascript
 db.test.find({skills : {$size : 3}})
 ```
 
@@ -273,13 +273,13 @@ const students =
 
 now you want to select the data which has a subject value both "english" & "math". you can write the query for it like this
 
-```ps
+```javascript
 db.test.find({subjects : ["english","math"]}) //this query won't works
 ```
 
 but this query won't give you any data because no data hold exactly those and also not maintaining those order in that array. This is where `$all` operator will help you
 
-```ps
+```javascript
 db.test.find({subjects : {$all : ["english","math"]}})
 ```
 
@@ -314,7 +314,7 @@ persons = {
 
 now you want to select the data what's skill property hold the `forntend : "react"` & `backend : "node"`. you can write this
 
-```ps
+```javascript
 db.test.find({skills: {
     frontend : "react",
     backend : "node"
@@ -323,7 +323,7 @@ db.test.find({skills: {
 
 this query won't works because no data hold skills field with only forntend & backend. now we can use `$elemMatch` for solve this problem
 
-```ps
+```javascript
 db.test.find({skills : {$elemMatch : {
     frontend : "react",
     backend : "node"
