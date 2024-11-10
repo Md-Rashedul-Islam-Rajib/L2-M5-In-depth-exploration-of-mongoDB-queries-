@@ -147,5 +147,83 @@ Sometime we need to find the data with the conditions from multiple fields or fi
 
 ```ps
 db.test.find({gender: "Female", age: 25, occupation: "Teacher"})
-db.test.find({gender: "Female", age:{$in:  [25,27]}, occupation: {$eq : "Teacher"}})
+
+
+db.test.find({gender: "Female", age:{$in: [25,27]}, occupation: {$eq : "Teacher"}})
+
+
+db.test.find({age:{$lte: 25, $gte : 18}})
 ```
+
+## $and Operator (Explicit)
+
+We can also use `$and` operator for connecting multiple conditions for filtering data
+
+
+```ps
+db.test.find({$and : [
+    {gender : "Female"},
+    {age : 25},
+    {occupation : "Teacher"}
+]})
+
+
+db.test.find({$and : [
+    {gender : "Female"},
+    {age : {$in : [25,27]}},
+    {occupation : { $eq : "Teacher"}}
+]})
+
+
+db.test.find({$and : [
+    {age: {$lte : 25}},
+    {age: {$gte : 16}}
+]})
+```
+
+## $or Operator
+
+If we need to select data for satisfies one condition from multiple conditions
+
+```ps
+db.test.find({$or : [
+    {gender : "Female"},
+    {age : 25},
+    {occupation : "Teacher"}
+]})
+
+
+db.test.find({$or : [
+    {gender : "Female"},
+    {age : {$in : [25,27]}},
+    {occupation : { $eq : "Teacher"}}
+]})
+
+
+db.test.find({$or : [
+    {age: {$lte : 25}},
+    {age: {$gte : 16}}
+]})
+```
+
+## $not Operator
+
+`$not` Operator select the data what doesn't match the condition
+
+```ps
+db.test.find({age : {$not : { $ gt : 25}}})
+```
+
+
+## $not Operator
+
+`$nor` Operator select datas when it failed to match with all the queries in the selected array
+
+
+```ps
+db.test.find({$nor : [
+{age: {$gt : 25}},
+{gender : "Male"}
+]})
+```
+
