@@ -246,3 +246,12 @@ db.test.find({occupation : {$exists : true}})
 db.test.find({skills : {$type : "array"}})
 ```
 
+## $size Operator
+
+`$size` operator select data based on selected field's property size
+
+```ps
+db.test.find({skills : {$size : 3}})
+```
+
+
