@@ -183,7 +183,7 @@ db.test.find({$and : [
 
 ## $or Operator
 
-If we need to select data for satisfies one condition from multiple conditions
+If we need to select data for satisfies one condition from multiple conditions then we can use `$or` operator
 
 ```ps
 db.test.find({$or : [
@@ -227,3 +227,12 @@ db.test.find({$nor : [
 ]})
 ```
 
+## $exists Operator
+
+`$exists` operator match the data based on a selected field contain or not on that document.
+
+```ps
+db.test.find({occupation : {$exists : true}})
+```
+
+`$exists` operator supports only boolean value.
