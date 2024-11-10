@@ -236,3 +236,13 @@ db.test.find({occupation : {$exists : true}})
 ```
 
 `$exists` operator supports only boolean value.
+
+
+## $type Operator
+
+`$type` operator select data based on selected field's value type
+
+```ps
+db.test.find({skills : {$type : "array"}})
+```
+
