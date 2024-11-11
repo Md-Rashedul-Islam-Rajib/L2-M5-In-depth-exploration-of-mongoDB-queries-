@@ -379,3 +379,67 @@ db.test.updateOne(
     }
 )
 ```
+
+## $unset operator
+
+`$unset` operator deletes a field from a data
+
+
+```javascript
+db.test.updateOne(
+    {name : "Mr x"}, //find query
+    {
+        $unset : {
+            interests : ""; // you can use 1 insteads "" for same results
+        }
+    }
+)
+```
+
+## $pop Operator
+
+`$pop` operator delete the last element from an array from a field
+
+```javascript
+db.test.updateOne(
+    {name : "Mr x"}, //find query
+    {
+        $pop : {
+            skills : 1; // this will delete the last element from skill array
+        }
+    }
+)
+```
+
+## $pull Operator
+
+if we need to delete the a value of a field but not the field then we can use `$pull` operator
+
+
+```javascript
+db.test.updateOne(
+    {name : "Mr x"}, //find query
+    {
+        $pull : {
+            occupation : "Teaching"; // this will delete the value "Teaching" but keep the occupation field with empty value
+        }
+    }
+)
+```
+
+## $pullAll Operator
+
+`$pullAll` is similar to `$pull` operator but `$pullAll` operator can delete multiple value from data at any time
+
+
+```javascript
+db.test.updateOne(
+    {name : "Mr x"}, //find query
+    {
+        $pullAll : {
+            skills : ["Teaching", "Cooking"]; // this will delete the value "Teaching" and "cooking" but keep the occupation field with empty value
+        }
+    }
+)
+```
+
