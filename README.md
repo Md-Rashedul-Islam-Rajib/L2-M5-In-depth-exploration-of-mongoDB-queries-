@@ -346,3 +346,36 @@ db.test.updateOne(
     }
     )
 ```
+
+## $addToSet Operator
+
+`$set` operator has a drawback. it's always replace the existing value with new value but if we need add new value with existing value, then we have to use `$addToSet`.
+
+```javascript
+db.test.updateOne(
+    {name : "Mr x"}, //find query
+    {
+        $addToSet : {
+            interests : ['sleeping', 'gaming']
+        }
+    }
+)
+```
+
+this will add `sleeping` & `gaming` to skills field with existing value but it can't add duplicate value.
+
+
+## $push Operator
+
+if we need to put duplicate value to a field of a data, then we need to use `$push` operator
+
+```javascript
+db.test.updateOne(
+    {name : "Mr x"}, //find query
+    {
+        $addToSet : {
+            interests : ['sleeping', 'gaming'] //this value will duplicated if they already exists in the data
+        }
+    }
+)
+```
