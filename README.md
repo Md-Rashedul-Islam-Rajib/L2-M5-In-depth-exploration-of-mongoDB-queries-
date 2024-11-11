@@ -443,3 +443,14 @@ db.test.updateOne(
 )
 ```
 
+## $inc Operator
+
+`$inc` operator increment a selected field's value by a specific amount
+
+```javascript
+db.test.updateOne(
+    {_id: 1}, //find query
+    {$inc : {age : 5}} //age field's value will be increment by 5
+)
+```
+
