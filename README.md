@@ -330,3 +330,19 @@ db.test.find({skills : {$elemMatch : {
 }}})
 ```
 this query select the data what skill section holds those value and ignore the other fields for match
+
+
+## Update command with $set operator
+
+if we need to update any fields from existing data we can use update command with `$set` operator.
+
+```javascript
+db.test.updateOne(
+    {name : "Mr x"},  // find query 
+    {
+        $set : {
+            age : 60
+        }
+    }
+    )
+```
