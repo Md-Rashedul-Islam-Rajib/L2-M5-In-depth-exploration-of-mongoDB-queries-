@@ -454,3 +454,34 @@ db.test.updateOne(
 )
 ```
 
+
+## Positional Operator `$`
+
+
+Positional operator `$` used for update a specific field's value within an array. It works as a placeholder of that specific element's index in the array and modify that element's value rather than effect other elements in the array.
+
+let think we have a document structured like this
+
+```json
+{
+   "_id": 1,
+   "comments": [
+      { "author": "Alice", "status": "pending", "message": "Great post!" },
+      { "author": "Bob", "status": "pending", "message": "Thanks for sharing!" },
+      { "author": "Alice", "status": "pending", "message": "Interesting points!" }
+   ]
+}
+
+```
+
+Now, we want to change the value status field what's author field have the value `Alice`. then we have write our query like this
+
+```javascript
+db.test.updateOne(
+   { "comments.author": "Alice" }, //find query
+   { $set: { "comments.$.status": "approved" } }
+);
+
+```
+we can see here comments is an array of object. so if we want to access the status field normally then we have go like `comments.[0].status`. here `$` operator works a placeholder for that element's index.
+
